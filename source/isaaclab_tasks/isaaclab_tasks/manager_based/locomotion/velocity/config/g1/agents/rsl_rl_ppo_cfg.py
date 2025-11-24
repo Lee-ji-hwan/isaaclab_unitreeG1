@@ -47,3 +47,23 @@ class G1FlatPPORunnerCfg(G1RoughPPORunnerCfg):
         self.experiment_name = "g1_flat"
         self.policy.actor_hidden_dims = [256, 128, 128]
         self.policy.critic_hidden_dims = [256, 128, 128]
+
+# 기존 코드 아래에 추가
+@configclass
+class G1SquatPPORunnerCfg(G1RoughPPORunnerCfg):
+    def __post_init__(self):
+        super().__post_init__()
+
+        # 1. 이름 변경 (가장 중요!)
+        # 로그 폴더가 logs/rsl_rl/g1_squat 에 생깁니다.
+        self.experiment_name = "g1_squat"
+
+        # 2. 학습 횟수 줄이기
+        # 스쿼트는 쉬워서 금방 배웁니다.
+        self.max_iterations = 1000
+        
+        # 3. (선택사항) 뇌 용량 조절
+        # 스쿼트는 단순해서 작은 뇌(Flat 설정)로도 충분합니다. 
+        # 그대로 둬도 상관없지만, 학습 속도를 조금 더 빠르게 하고 싶다면 아래 주석 해제
+        self.policy.actor_hidden_dims = [256, 128, 128]
+        self.policy.critic_hidden_dims = [256, 128, 128]

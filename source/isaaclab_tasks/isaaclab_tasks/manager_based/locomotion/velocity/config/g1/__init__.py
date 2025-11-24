@@ -57,3 +57,18 @@ gym.register(
         "skrl_cfg_entry_point": f"{agents.__name__}:skrl_flat_ppo_cfg.yaml",
     },
 )
+
+gym.register(
+    id="Isaac-Squat-G1-v0",
+    entry_point="isaaclab.envs:ManagerBasedRLEnv",
+    disable_env_checker=True,
+    kwargs={
+        # 1. 환경 설정 파일: squat_env_cfg.py 안의 G1SquatEnvCfg 클래스 연결
+        "env_cfg_entry_point": f"{__name__}.squat_env_cfg:G1SquatEnvCfg",
+        
+        # 2. PPO 설정 파일: agents/rsl_rl_ppo_cfg.py 안의 G1SquatPPORunnerCfg 클래스 연결
+        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:G1SquatPPORunnerCfg",
+        
+        # (선택) skrl 설정은 없으므로 생략하거나 기본값 사용
+    },
+)
